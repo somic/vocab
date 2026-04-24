@@ -1,0 +1,264 @@
+:root {
+    --bg-color: #f7f9fc;
+    --card-bg: #ffffff;
+    --text-color: #2d3748;
+    --primary-color: #4a5568;
+    --accent-color: #edf2f7;
+    --correct-color: #c6f6d5;
+    --correct-text: #22543d;
+    --incorrect-color: #fed7d7;
+    --incorrect-text: #742a2a;
+    --border-color: #e2e8f0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+#app {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.screen {
+    width: 100%;
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Setup Screen */
+#setup-screen {
+    max-width: 500px;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    align-self: flex-start;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    background-color: white;
+}
+
+.checkbox-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: var(--accent-color);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.checkbox-item input {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
+}
+
+/* Quiz Layout - 3 Columns */
+.quiz-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    align-items: start;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Card Styling */
+.card {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card .word {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+.choices {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.choice-btn {
+    padding: 16px;
+    font-size: 1.1rem;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.choice-btn:hover:not(.disabled) {
+    background: var(--accent-color);
+    border-color: var(--primary-color);
+}
+
+.choice-btn.disabled {
+    pointer-events: none;
+}
+
+/* States */
+.card.correct { background-color: var(--correct-color); }
+.card.incorrect { background-color: var(--incorrect-color); }
+
+.choice-btn.selected-correct {
+    background-color: var(--correct-color);
+    border-color: var(--correct-text);
+    color: var(--correct-text);
+}
+
+.choice-btn.selected-incorrect {
+    background-color: var(--incorrect-color);
+    border-color: var(--incorrect-text);
+    color: var(--incorrect-text);
+}
+
+.choice-btn.hint-correct {
+    border-color: #48bb78;
+    background-color: #f0fff4;
+}
+
+/* Animations */
+.card-entering {
+    transform: translateX(100vw);
+    opacity: 0;
+}
+
+.card-active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.card-exiting {
+    /* When moved to left column, we reset transform but the move itself can be animated */
+}
+
+/* Controls Column */
+.controls {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 200px;
+}
+
+#counter {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.secondary-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .quiz-layout {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "controls"
+            "active"
+            "previous";
+    }
+    #right-column { grid-area: controls; }
+    #center-column { grid-area: active; }
+    #left-column { grid-area: previous; }
+    
+    .controls {
+        max-width: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #counter { margin-bottom: 0; }
+    #restart-btn { width: auto; }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocab Learner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="screen">
+            <h1>Vocab Setup</h1>
+            <div class="setup-form">
+                <div class="form-group">
+                    <label>My Language:</label>
+                    <select id="my-language"></select>
+                </div>
+                <div class="form-group">
+                    <label>Foreign Languages:</label>
+                    <div id="foreign-languages" class="checkbox-list"></div>
+                </div>
+                <button id="start-btn" class="primary-btn">START</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen hidden">
+            <div class="quiz-layout">
+                <div id="left-column" class="column">
+                    <!-- Previous card moves here -->
+                </div>
+                <div id="center-column" class="column">
+                    <!-- Current card appears here -->
+                    <div id="active-card-container"></div>
+                </div>
+                <div id="right-column" class="column">
+                    <div class="controls">
+                        <div id="counter">0 / 0</div>
+                        <button id="restart-btn" class="secondary-btn">RESTART</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
