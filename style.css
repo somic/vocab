@@ -136,7 +136,7 @@ select {
 .card {
     background: var(--card-bg);
     width: 100%;
-    width: 400px; /* Fixed width for consistency across columns */
+    max-width: 400px; /* Use max-width for better responsiveness */
     padding: 30px;
     border-radius: 16px;
     box-shadow: var(--shadow);
@@ -145,10 +145,10 @@ select {
 }
 
 .card .word {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: var(--primary-color);
 }
 
@@ -244,12 +244,15 @@ select {
 
 /* Responsive */
 @media (max-width: 1000px) {
+    #app { padding: 10px; }
+
     .quiz-layout {
         grid-template-columns: 1fr;
         grid-template-areas: 
             "controls"
             "active"
             "previous";
+        gap: 15px;
     }
     #right-column { grid-area: controls; }
     #center-column { grid-area: active; }
@@ -260,7 +263,24 @@ select {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 15px;
     }
-    #counter { margin-bottom: 0; }
-    #restart-btn { width: auto; }
+    #counter { margin-bottom: 0; font-size: 1.2rem; }
+    #restart-btn { width: auto; padding: 8px 16px; }
+
+    .card {
+        padding: 20px;
+    }
+    .card .word {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    .choices {
+        grid-template-columns: 1fr 1fr; /* Two columns to save height */
+        gap: 8px;
+    }
+    .choice-btn {
+        padding: 12px 8px;
+        font-size: 1rem;
+    }
 }
