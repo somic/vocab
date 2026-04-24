@@ -80,6 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
         setupScreen.classList.remove('hidden');
     });
 
+    // Helper: Fisher-Yates Shuffle
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
     // Core Logic
     function updateCounter() {
         counterDisplay.textContent = `${score.correct} / ${score.total}`;
@@ -114,9 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let choices = [correctTranslation];
 
         // 4 from same group
-        const sameGroupWords = data[groupName]
-            .filter(w => w[myLanguage] !== correctTranslation)
-            .sort(() => 0.5 - Math.random());
+        let sameGroupWords = data[groupName]
+            .filter(w => w[myLanguage] !== correctTranslation);
+        shuffle(sameGroupWords);
         
         for (let i = 0; i < Math.min(4, sameGroupWords.length); i++) {
             choices.push(sameGroupWords[i][myLanguage]);
@@ -124,12 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1 from another group
         const otherGroups = groups.filter(g => g !== groupName);
-        const otherGroup = data[otherGroups[Math.floor(Math.random() * otherGroups.length)]];
+        const otherGroupName = otherGroups[Math.floor(Math.random() * otherGroups.length)];
+        const otherGroup = data[otherGroupName];
         const otherWord = otherGroup[Math.floor(Math.random() * otherGroup.length)];
         choices.push(otherWord[myLanguage]);
 
-        // Shuffle choices
-        choices.sort(() => 0.5 - Math.random());
+        // Shuffle choices with proper algorithm
+        shuffle(choices);
 
         // 4. Create Card UI
         const card = document.createElement('div');
