@@ -118,9 +118,11 @@ select {
 /* Quiz Layout - 3 Columns */
 .quiz-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 400px 400px 1fr;
+    gap: 40px;
     width: 100%;
+    max-width: 1200px;
+    justify-content: center;
     align-items: start;
 }
 
@@ -134,7 +136,7 @@ select {
 .card {
     background: var(--card-bg);
     width: 100%;
-    max-width: 400px;
+    width: 400px; /* Fixed width for consistency across columns */
     padding: 30px;
     border-radius: 16px;
     box-shadow: var(--shadow);
