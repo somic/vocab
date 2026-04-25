@@ -17,6 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let wordHistory = []; // Stores strings like "group:index"
     const HISTORY_LIMIT = 20;
 
+    // Helper: Pronunciation
+    function pronounce(word, langCode) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        const voices = window.speechSynthesis.getVoices();
+        const match = voices.find(v => v.lang.startsWith(langCode));
+        
+        if (match) {
+            utterance.voice = match;
+            utterance.lang = match.lang;
+        } else {
+            utterance.lang = langCode;
+        }
+        window.speechSynthesis.speak(utterance);
+    }
+
     // Initialization: Populate Languages
     const availableLangs = Object.keys(data.verbs[0]);
     availableLangs.forEach(lang => {
@@ -146,19 +161,48 @@ document.addEventListener('DOMContentLoaded', () => {
         card.className = 'card card-entering';
         
         const wordDiv = document.createElement('div');
-        wordDiv.className = 'word';
-        wordDiv.textContent = wordObj[foreignLang];
+        wordDiv.className = 'word-container';
+        
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        wordSpan.textContent = wordObj[foreignLang];
+        
+        const speakerIcon = document.createElement('button');
+        speakerIcon.className = 'speaker-btn';
+        speakerIcon.innerHTML = '🔊';
+        speakerIcon.title = 'Pronounce';
+        speakerIcon.onclick = (e) => {
+            e.stopPropagation();
+            pronounce(wordObj[foreignLang], foreignLang);
+        };
+
+        wordDiv.appendChild(wordSpan);
+        wordDiv.appendChild(speakerIcon);
         card.appendChild(wordDiv);
 
         const choicesDiv = document.createElement('div');
         choicesDiv.className = 'choices';
         
         choices.forEach(choice => {
+            const container = document.createElement('div');
+            container.className = 'choice-container';
+
             const btn = document.createElement('button');
             btn.className = 'choice-btn';
             btn.textContent = choice;
             btn.onclick = () => handleChoice(card, btn, choice === correctTranslation, correctTranslation);
-            choicesDiv.appendChild(btn);
+            
+            const speakerIcon = document.createElement('button');
+            speakerIcon.className = 'speaker-btn choice-speaker';
+            speakerIcon.innerHTML = '🔊';
+            speakerIcon.onclick = (e) => {
+                e.stopPropagation();
+                pronounce(choice, myLanguage);
+            };
+
+            container.appendChild(btn);
+            container.appendChild(speakerIcon);
+            choicesDiv.appendChild(container);
         });
 
         card.appendChild(choicesDiv);
